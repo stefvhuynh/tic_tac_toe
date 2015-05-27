@@ -9,6 +9,7 @@ gem 'jbuilder'
 gem 'bcrypt'
 gem 'unicorn'
 gem 'redis'
+gem 'redis-namespace'
 
 group :development, :test do
   gem 'byebug'
