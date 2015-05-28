@@ -1,0 +1,24 @@
+{
+  "name": "TicTacToe",
+  "version": "0.0.1",
+  "description": "A tic-tac-toe game",
+  "author": "Stefan Huynh <huynh.stefan@gmail.com>",
+  "main": "app/assets/javascripts/main.js",
+  "devDependencies": {
+    "webpack": "*",
+    "webpack-dev-server": "*",
+    "babel-loader": "*"
+  },
+  "dependencies": {
+    "marty": "^0.9.16",
+    "react": "*",
+    "react-tools": "*",
+    "react-router": "*",
+    "immutable": "*",
+    "react-bootstrap": "*"
+  },
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --progress --colors --watch"
+  }
+}
