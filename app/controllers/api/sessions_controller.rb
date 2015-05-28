@@ -3,12 +3,12 @@ class Api::SessionsController < ApplicationController
 
   def create
     @user = User.find_by_credentials(
-      params[:user][:username],
-      params[:user][:password]
+      params[:credentials][:username],
+      params[:credentials][:password]
     )
 
     if @user
-      @session = Session.create(@user.id)
+      log_in(@user)
       render :show
     else
       render json: { errors: ['Invalid username/password combination'] },

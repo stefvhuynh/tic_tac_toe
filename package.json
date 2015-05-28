@@ -5,17 +5,18 @@
   "author": "Stefan Huynh <huynh.stefan@gmail.com>",
   "main": "app/assets/javascripts/main.js",
   "devDependencies": {
-    "webpack": "*",
-    "webpack-dev-server": "*",
-    "babel-loader": "*"
+    "webpack": "^1.9.10",
+    "babel-core": "^5.4.7",
+    "babel-loader": "^5.1.3"
   },
   "dependencies": {
     "marty": "^0.9.16",
-    "react": "*",
-    "react-tools": "*",
-    "react-router": "*",
-    "immutable": "*",
-    "react-bootstrap": "*"
+    "react": "^0.13.3",
+    "react-tools": "^0.13.3",
+    "react-router": "^0.13.3",
+    "immutable": "^3.7.3",
+    "jquery": "^2.1.4",
+    "change-case": "^2.3.0"
   },
   "scripts": {
     "build": "webpack",
