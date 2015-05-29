@@ -65,6 +65,12 @@ class UserActions extends Marty.ActionCreators {
   failGetUser(errors) {
     this.dispatch(UserConstants.LOAD_USER_FAILED, errors);
   }
+
+  logOut() {
+    ApiUtils.deleteSession(CookieUtils.getSessionCookie());
+    CookieUtils.deleteSessionCookie();
+    this.dispatch(UserConstants.LOG_OUT);
+  }
 }
 
 export default Marty.register(UserActions);

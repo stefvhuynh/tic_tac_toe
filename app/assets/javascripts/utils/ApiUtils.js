@@ -13,6 +13,17 @@ const ApiUtils = {
     );
   },
 
+  deleteSession(sessionToken, successCallback, errorCallback) {
+    this.makeAjaxRequest(
+      '/api/session/',
+      'DELETE',
+      {},
+      { 'X-Session-Token': sessionToken },
+      successCallback,
+      errorCallback
+    );
+  },
+
   createUser(username, password, successCallback, errorCallback) {
     this.makeAjaxRequest(
       '/api/users/',
@@ -61,7 +72,7 @@ const ApiUtils = {
 
     Object.keys(obj).forEach(key =>
       newObj[ChangeCase[casing](key)] =
-        (typeof obj[key] === 'object' && !$.isArray(obj[key])) ?
+        (Object.prototype.toString.call(obj[key]) === '[object Object]') ?
           this.convertObjToCase(obj[key], casing) : obj[key]
     );
 
