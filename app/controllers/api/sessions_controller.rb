@@ -1,6 +1,16 @@
 class Api::SessionsController < ApplicationController
   before_action :require_logged_in, except: :create
 
+  def show
+    @user = User.find(current_session.user_id)
+
+    if @user
+      render :show
+    else
+      render nothing: true, status: :not_found
+    end
+  end
+
   def create
     @user = User.find_by_credentials(
       params[:credentials][:username],

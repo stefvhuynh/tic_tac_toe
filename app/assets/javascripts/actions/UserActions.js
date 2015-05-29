@@ -4,8 +4,8 @@ import ApiUtils from 'utils/ApiUtils';
 import CookieUtils from 'utils/CookieUtils';
 
 class UserActions extends Marty.ActionCreators {
-  logIn(user) {
-    this.dispatch(UserConstants.LOG_IN, user);
+  loadUser(user) {
+    this.dispatch(UserConstants.LOAD_USER, user);
   }
 
   attemptSignUp(username, password) {
@@ -15,7 +15,7 @@ class UserActions extends Marty.ActionCreators {
       user => {
         if (user.sessionToken) {
           CookieUtils.setSessionCookie(user.sessionToken);
-          this.logIn(user);
+          this.loadUser(user);
         } else {
           this.failSignUp({ errors: ['Missing session token'] });
         }
@@ -26,6 +26,10 @@ class UserActions extends Marty.ActionCreators {
     this.dispatch(UserConstants.SIGN_UP_STARTING);
   }
 
+  failSignUp(errors) {
+    this.dispatch(UserConstants.SIGN_UP_FAILED, errors);
+  }
+
   attemptLogIn(username, password) {
     ApiUtils.createSession(
       username,
@@ -33,7 +37,7 @@ class UserActions extends Marty.ActionCreators {
       user => {
         if (user.sessionToken) {
           CookieUtils.setSessionCookie(user.sessionToken);
-          this.logIn(user)
+          this.loadUser(user)
         } else {
           this.failLogIn({ errors: ['Missing session token'] });
         }
@@ -44,12 +48,22 @@ class UserActions extends Marty.ActionCreators {
     this.dispatch(UserConstants.LOG_IN_STARTING);
   }
 
-  failSignUp(errors) {
-    this.dispatch(UserConstants.SIGN_UP_FAILED, errors);
-  }
-
   failLogIn(errors) {
     this.dispatch(UserConstants.LOG_IN_FAILED, errors);
+  }
+
+  attemptGetSession() {
+    ApiUtils.getSession(
+      CookieUtils.getSessionCookie(),
+      user => this.loadUser(user),
+      errors => this.failGetUser(errors)
+    );
+
+    this.dispatch(UserConstants.GET_SESSION_STARTING);
+  }
+
+  failGetUser(errors) {
+    this.dispatch(UserConstants.LOAD_USER_FAILED, errors);
   }
 }
 

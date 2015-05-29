@@ -2,6 +2,17 @@ import $ from 'jquery';
 import ChangeCase from 'change-case';
 
 const ApiUtils = {
+  getSession(sessionToken, successCallback, errorCallback) {
+    this.makeAjaxRequest(
+      '/api/session/',
+      'GET',
+      {},
+      { 'X-Session-Token': sessionToken },
+      successCallback,
+      errorCallback
+    );
+  },
+
   createUser(username, password, successCallback, errorCallback) {
     this.makeAjaxRequest(
       '/api/users/',

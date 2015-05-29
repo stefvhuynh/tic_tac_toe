@@ -3,12 +3,16 @@ import Cookie from 'cookie';
 const CookieUtils = {
   SESSION_COOKIE_NAME: 'ticTacToeSession',
 
+  isLoggedIn() {
+    return this.getSessionCookie() ? true : false;
+  },
+
   setSessionCookie(value) {
     return this.setCookie(this.SESSION_COOKIE_NAME, value);
   },
 
-  readSessionCookie() {
-    return this.readCookie(this.SESSION_COOKIE_NAME);
+  getSessionCookie() {
+    return this.getCookie(this.SESSION_COOKIE_NAME);
   },
 
   deleteSessionCookie() {
@@ -20,7 +24,7 @@ const CookieUtils = {
     return document.cookie;
   },
 
-  readCookie(name) {
+  getCookie(name) {
     const cookies = Cookie.parse(document.cookie);
     return cookies[name];
   },

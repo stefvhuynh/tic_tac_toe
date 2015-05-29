@@ -12,7 +12,7 @@ class UserStore extends Marty.Store {
     this.draws;
 
     this.handlers = {
-      loadUser: UserConstants.LOG_IN
+      loadUser: UserConstants.LOAD_USER
     };
   }
 
@@ -23,6 +23,20 @@ class UserStore extends Marty.Store {
     this.losses = user.losses;
     this.draws = user.draws;
     this.hasChanged();
+  }
+
+  getUser() {
+    return {
+      userId: this.userId,
+      username: this.username,
+      wins: this.wins,
+      losses: this.losses,
+      draws: this.draws
+    }
+  }
+
+  hasLoadedUser() {
+    return this.userId ? true : false;
   }
 }
 
