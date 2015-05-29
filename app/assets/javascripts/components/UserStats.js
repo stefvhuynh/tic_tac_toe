@@ -5,16 +5,14 @@ import UserStore from 'stores/UserStore';
 class UserStats extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = this.props.user;
   }
 
   render() {
     return(
       <div className="UserStats">
-        <h3>Wins: { this.state.wins }</h3>
-        <h3>Losses: { this.state.losses }</h3>
-        <h3>Draws: { this.state.draws }</h3>
+        <h3>Wins: { this.props.user.wins }</h3>
+        <h3>Losses: { this.props.user.losses }</h3>
+        <h3>Draws: { this.props.user.draws }</h3>
       </div>
     );
   }
