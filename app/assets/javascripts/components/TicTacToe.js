@@ -18,7 +18,20 @@ class TicTacToe extends React.Component {
       <div className="TicTacToe">
         <h1>TicTacToe</h1>
 
-        <h3>Sign up</h3>
+        <h3>Log In</h3>
+        <form>
+          <input type="text"
+            placeholder="username"
+            value={ this.state.existingUsername }
+            onChange={ this._generateInputChangeHandler('existingUsername') }/>
+          <input type="password"
+            placeholder="password"
+            value={ this.state.existingPassword }
+            onChange={ this._generateInputChangeHandler('existingPassword') }/>
+          <button onClick={ this._onLogInSubmit() }>Log In</button>
+        </form>
+
+        <h3>Sign Up</h3>
         <form>
           <input type="text"
             placeholder="username"
@@ -47,6 +60,18 @@ class TicTacToe extends React.Component {
     const boundFn = event => {
       event.preventDefault();
       UserActions.attemptSignUp(this.state.newUsername, this.state.newPassword);
+    }
+
+    return boundFn;
+  }
+
+  _onLogInSubmit() {
+    const boundFn = event => {
+      event.preventDefault();
+      UserActions.attemptLogIn(
+        this.state.existingUsername,
+        this.state.existingPassword
+      );
     }
 
     return boundFn;

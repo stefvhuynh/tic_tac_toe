@@ -35,9 +35,11 @@ const ApiUtils = {
           successCallback(this.convertObjToCase(response, 'camelCase'));
         }
       },
-      error: error => {
+      errors: errors => {
         if (errorCallback) {
-          errorCallback(this.convertObjToCase(error.responseJSON, 'camelCase'));
+          errorCallback(
+            this.convertObjToCase(errors.responseJSON, 'camelCase')
+          );
         }
       }
     });
@@ -48,7 +50,7 @@ const ApiUtils = {
 
     Object.keys(obj).forEach(key =>
       newObj[ChangeCase[casing](key)] =
-        (typeof obj[key] === 'object') ?
+        (typeof obj[key] === 'object' && !$.isArray(obj[key])) ?
           this.convertObjToCase(obj[key], casing) : obj[key]
     );
 
