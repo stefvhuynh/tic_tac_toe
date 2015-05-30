@@ -1,14 +1,31 @@
+import ComputerAi from 'models/ComputerAi';
+
 class Game {
-  constructor(board) {
+  constructor(board, difficulty) {
     this.board = board;
+    this.difficulty = difficulty;
+    this.computerAi = new ComputerAi(difficulty);
+  }
+
+  getBoard() {
+    return this.board;
   }
 
   getCell(rowIndex, cellIndex) {
     return this.board.get(rowIndex).get(cellIndex);
   }
 
+  makeUserMove(rowIndex, cellIndex) {
+    return this.makeMove(rowIndex, cellIndex, 'X');
+  }
+
+  makeComputerMove() {
+    const move = this.computerAi.chooseMove(this.board);
+    return this.makeMove(move.get('rowIndex'), move.get('cellIndex'), 'O');
+  }
+
   makeMove(rowIndex, cellIndex, mark) {
-    if (!_isValidMove) {
+    if (!this._isValidMove(rowIndex, cellIndex)) {
       return false;
     }
 
@@ -19,12 +36,12 @@ class Game {
 
   checkWin() {
     return(
-      this._checkRowWin() || this._checkColumnWin() || this._checkDiagonalWin();
+      this._checkRowWin() || this._checkColumnWin() || this._checkDiagonalWin()
     );
   }
 
   _isValidMove(rowIndex, cellIndex) {
-    return this.board.get(rowIndex).get(cellIndex) !== 'E';
+    return this.getCell(rowIndex, cellIndex) === 'E';
   }
 
   _checkRowWin() {
@@ -69,3 +86,5 @@ class Game {
     return firstTwoEqual && lastTwoEqual;
   }
 }
+
+export default Game;

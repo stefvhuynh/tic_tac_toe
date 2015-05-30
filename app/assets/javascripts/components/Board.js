@@ -3,12 +3,13 @@ import Marty from 'marty';
 import GameConstants from 'constants/GameConstants';
 import GameActions from 'actions/GameActions';
 import GameStore from 'stores/GameStore';
-import ComputerAi from 'models/ComputerAi';
+import Game from 'models/Game';
 
 class Board extends React.Component {
   constructor(props) {
     super(props);
-    this.computerAi = new ComputerAi(GameConstants.EASY);
+    const board = this.props.gameState.get('board');
+    this.game = new Game(board, GameConstants.EASY);
   }
 
   render() {
@@ -44,19 +45,14 @@ class Board extends React.Component {
     const boundFn = event => {
       event.preventDefault();
 
-      if (this.props.gameState.get('userTurn')) {
-        GameActions.userMove(rowIndex, cellIndex);
-        this._computerMove();
+      if (!this.props.gameState.get('gameOver')) {
+        if (this.game.makeUserMove(rowIndex, cellIndex)) {
+          GameActions.updateBoard(this.game.getBoard());
+        }
       }
     };
 
     return boundFn;
-  }
-
-  _computerMove() {
-    const board = this.props.gameState.get('board');
-    const move = this.computerAi.chooseMove(board);
-    GameActions.computerMove(move.get('rowIndex'), move.get('cellIndex'));
   }
 }
 
