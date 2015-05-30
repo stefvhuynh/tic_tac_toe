@@ -23,3 +23,5 @@ class ComputerAi {
     }
   }
 }
+
+export default ComputerAi;

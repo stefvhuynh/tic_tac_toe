@@ -1,5 +1,6 @@
 import React from 'react';
 import Marty from 'marty';
+import GameConstants from 'constants/GameConstants';
 import GameActions from 'actions/GameActions';
 import GameStore from 'stores/GameStore';
 import ComputerAi from 'models/ComputerAi';
@@ -21,7 +22,9 @@ class Board extends React.Component {
   }
 
   _generateGrid() {
-    const rows = this.props.gameState.board.map((row, rowIndex) => {
+    const board = this.props.gameState.get('board');
+
+    const rows = board.map((row, rowIndex) => {
       const cells = row.map((cell, cellIndex) => {
         return(
           <td onClick={ this._onCellClick(rowIndex, cellIndex) }
@@ -41,7 +44,7 @@ class Board extends React.Component {
     const boundFn = event => {
       event.preventDefault();
 
-      if (this.props.gameState.userTurn) {
+      if (this.props.gameState.get('userTurn')) {
         GameActions.userMove(rowIndex, cellIndex);
         this._computerMove();
       }
@@ -51,7 +54,8 @@ class Board extends React.Component {
   }
 
   _computerMove() {
-    const move = this.computerAi.chooseMove(this.props.gameState.board);
+    const board = this.props.gameState.get('board');
+    const move = this.computerAi.chooseMove(board);
     GameActions.computerMove(move.get('rowIndex'), move.get('cellIndex'));
   }
 }
