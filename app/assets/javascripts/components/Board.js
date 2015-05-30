@@ -2,10 +2,12 @@ import React from 'react';
 import Marty from 'marty';
 import GameActions from 'actions/GameActions';
 import GameStore from 'stores/GameStore';
+import ComputerAi from 'models/ComputerAi';
 
 class Board extends React.Component {
   constructor(props) {
     super(props);
+    this.computerAi = new ComputerAi(GameConstants.EASY);
   }
 
   render() {
@@ -19,7 +21,7 @@ class Board extends React.Component {
   }
 
   _generateGrid() {
-    const rows = this.props.board.map((row, rowIndex) => {
+    const rows = this.props.gameState.board.map((row, rowIndex) => {
       const cells = row.map((cell, cellIndex) => {
         return(
           <td onClick={ this._onCellClick(rowIndex, cellIndex) }
@@ -38,18 +40,27 @@ class Board extends React.Component {
   _onCellClick(rowIndex, cellIndex) {
     const boundFn = event => {
       event.preventDefault();
-      GameActions.userMove(rowIndex, cellIndex);
+
+      if (this.props.gameState.userTurn) {
+        GameActions.userMove(rowIndex, cellIndex);
+        this._computerMove();
+      }
     };
 
     return boundFn;
+  }
+
+  _computerMove() {
+    const move = this.computerAi.chooseMove(this.props.gameState.board);
+    GameActions.computerMove(move.get('rowIndex'), move.get('cellIndex'));
   }
 }
 
 export default Marty.createContainer(Board, {
   listenTo: GameStore,
   fetch: {
-    board() {
-      return GameStore.getBoard();
+    gameState() {
+      return GameStore.getGameState();
     }
   }
 });

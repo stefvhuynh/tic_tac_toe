@@ -12,17 +12,8 @@ class UserStore extends Marty.Store {
     this.draws;
 
     this.handlers = {
-      loadUser: UserConstants.LOAD_USER
+      _loadUser: UserConstants.LOAD_USER
     };
-  }
-
-  loadUser(user) {
-    this.userId = user.id;
-    this.username = user.username;
-    this.wins = user.wins;
-    this.losses = user.losses;
-    this.draws = user.draws;
-    this.hasChanged();
   }
 
   getUser() {
@@ -37,6 +28,15 @@ class UserStore extends Marty.Store {
 
   hasLoadedUser() {
     return this.userId ? true : false;
+  }
+
+  _loadUser(user) {
+    this.userId = user.id;
+    this.username = user.username;
+    this.wins = user.wins;
+    this.losses = user.losses;
+    this.draws = user.draws;
+    this.hasChanged();
   }
 }
 

@@ -12,19 +12,33 @@ class GameStore extends Marty.Store {
       Immutable.List.of('E', 'E', 'E')
     );
 
+    this.userTurn = true;
+
     this.handlers = {
-      userMove: GameConstants.USER_MOVE
+      _userMove: GameConstants.USER_MOVE,
+      _computerMove: GameConstants.COMPUTER_MOVE
     };
   }
 
-  getBoard() {
-    return this.board;
+  getGameState() {
+    return Immutable.Map({ board: this.board, userTurn: this.userTurn });
   }
 
-  userMove(rowIndex, cellIndex) {
-    const newRow = this.board.get(rowIndex).set(cellIndex, 'X');
-    this.board = this.board.set(rowIndex, newRow);
+  _userMove(rowIndex, cellIndex) {
+    this._setBoardCell(rowIndex, cellIndex, 'X');
+    this.userTurn = false;
     this.hasChanged();
+  }
+
+  _computerMove(rowIndex, cellIndex) {
+    this._setBoardCell(rowIndex, cellIndex, 'O');
+    this.userTurn = true;
+    this.hasChanged();
+  }
+
+  _setBoardCell(rowIndex, cellIndex, mark) {
+    const newRow = this.board.get(rowIndex).set(cellIndex, mark);
+    this.board = this.board.set(rowIndex, newRow);
   }
 }
 
