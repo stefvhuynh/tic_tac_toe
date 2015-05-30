@@ -1,22 +1,23 @@
 import React from 'react';
 import Marty from 'marty';
 import Router from 'react-router';
+import Board from 'components/Board';
 
 const { Link } = Router;
 
-class Game extends React.Component {
+class GamePage extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
     return(
-      <div className="Game">
+      <div className="GamePage">
         <Link to="front-page">Back</Link>
-        Game
+        <Board/>
       </div>
     );
   }
 }
 
-export default Game;
+export default GamePage;

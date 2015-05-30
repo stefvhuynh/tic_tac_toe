@@ -39,7 +39,7 @@ class FrontPage extends React.Component {
 
     return(
       <div className="FrontPage">
-        <Link to="game">Play Game</Link>
+        <Link to="game-page">Play Game</Link>
         { userSection }
       </div>
     );
