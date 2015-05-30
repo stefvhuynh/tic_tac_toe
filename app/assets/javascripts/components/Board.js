@@ -1,5 +1,7 @@
 import React from 'react';
 import Marty from 'marty';
+import GameActions from 'actions/GameActions';
+import GameStore from 'stores/GameStore';
 
 class Board extends React.Component {
   constructor(props) {
@@ -7,8 +9,7 @@ class Board extends React.Component {
   }
 
   render() {
-    const example = [[1, 0, 1], [0, 1, 0], [1, 0, 1]];
-    const grid = this._generateGrid(example);
+    const grid = this._generateGrid();
 
     return(
       <div className="Board">
@@ -17,10 +18,15 @@ class Board extends React.Component {
     );
   }
 
-  _generateGrid(model) {
-    const rows = model.map((row, rowIndex) => {
+  _generateGrid() {
+    const rows = this.props.board.map((row, rowIndex) => {
       const cells = row.map((cell, cellIndex) => {
-        return <td key={ cellIndex }>{ cell }</td>;
+        return(
+          <td onClick={ this._onCellClick(rowIndex, cellIndex) }
+            key={ cellIndex }>
+            { cell }
+          </td>
+        );
       });
 
       return <tr key={ rowIndex }>{ cells }</tr>;
@@ -28,6 +34,22 @@ class Board extends React.Component {
 
     return <table className="grid">{ rows }</table>;
   }
+
+  _onCellClick(rowIndex, cellIndex) {
+    const boundFn = event => {
+      event.preventDefault();
+      GameActions.userMove(rowIndex, cellIndex);
+    };
+
+    return boundFn;
+  }
 }
 
-export default Board;
+export default Marty.createContainer(Board, {
+  listenTo: GameStore,
+  fetch: {
+    board() {
+      return GameStore.getBoard();
+    }
+  }
+});
