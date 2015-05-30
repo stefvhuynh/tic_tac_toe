@@ -13,6 +13,7 @@ class GameStore extends Marty.Store {
     );
 
     this.gameOver = false;
+    this.winner;
 
     this.handlers = {
       _updateBoard: GameConstants.UPDATE_BOARD,
@@ -21,7 +22,11 @@ class GameStore extends Marty.Store {
   }
 
   getGameState() {
-    return Immutable.Map({ board: this.board, gameOver: this.gameOver });
+    return Immutable.Map({
+      board: this.board,
+      gameOver: this.gameOver,
+      winner: this.winner
+    });
   }
 
   _updateBoard(board) {
@@ -31,6 +36,11 @@ class GameStore extends Marty.Store {
 
   _updateState(gameOver) {
     this.gameOver = gameOver;
+    this.hasChanged();
+  }
+
+  _updateWinner(winner) {
+    this.winner = winner;
     this.hasChanged();
   }
 }

@@ -5,10 +5,19 @@ class Game {
     this.board = board;
     this.difficulty = difficulty;
     this.computerAi = new ComputerAi(difficulty);
+    this.winner;
   }
 
   getBoard() {
     return this.board;
+  }
+
+  getWinner() {
+    if (this.checkWin()) {
+      return this.winner;
+    }
+
+    return null;
   }
 
   getCell(rowIndex, cellIndex) {
@@ -50,6 +59,7 @@ class Game {
       const lastTwoEqual = this.getCell(i, 1) === this.getCell(i, 2);
 
       if (firstTwoEqual && lastTwoEqual) {
+        this.winner = this.getCell(i, 0);
         return true;
       }
     }
@@ -63,6 +73,7 @@ class Game {
       const lastTwoEqual = this.getCell(1, i) === this.getCell(2, i);
 
       if (firstTwoEqual && lastTwoEqual) {
+        this.winner = this.getCell(0, i);
         return true;
       }
     }
@@ -77,13 +88,25 @@ class Game {
   _checkLeftDiagonalWin() {
     const firstTwoEqual = this.getCell(0, 0) === this.getCell(1, 1);
     const lastTwoEqual = this.getCell(1, 1) === this.getCell(2, 2);
-    return firstTwoEqual && lastTwoEqual;
+
+    if (firstTwoEqual && lastTwoEqual) {
+      this.winner = this.getCell(0, 0);
+      return true;
+    }
+
+    return false;
   }
 
   _checkRightDiagonalWin() {
     const firstTwoEqual = this.getCell(0, 2) === this.getCell(1, 1);
     const lastTwoEqual = this.getCell(1, 1) === this.getCell(2, 0);
-    return firstTwoEqual && lastTwoEqual;
+
+    if (firstTwoEqual && lastTwoEqual) {
+      this.winner = this.getCell(0, 2);
+      return true;
+    }
+
+    return false;
   }
 }
 
