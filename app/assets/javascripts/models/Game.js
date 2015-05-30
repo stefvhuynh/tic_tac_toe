@@ -13,7 +13,7 @@ class Game {
   }
 
   getWinner() {
-    if (this.checkWin()) {
+    if (this.hasWon()) {
       return this.winner;
     }
 
@@ -43,10 +43,28 @@ class Game {
     return true;
   }
 
-  checkWin() {
+  isDraw() {
+    return this.isBoardFilled() && !this.hasWon();
+  }
+
+  hasWon() {
     return(
       this._checkRowWin() || this._checkColumnWin() || this._checkDiagonalWin()
     );
+  }
+
+  isBoardFilled() {
+    let filled = true;
+
+    this.board.forEach(row => {
+      row.forEach(cell => {
+        if (cell === 'E') {
+          filled = false;
+        }
+      });
+    });
+
+    return filled;
   }
 
   _isValidMove(rowIndex, cellIndex) {
