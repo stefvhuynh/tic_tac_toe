@@ -23,15 +23,17 @@ class Session
     self.generate_session_token! unless session_token
   end
 
-  def generate_session_token!
-    @session_token = SecureRandom.urlsafe_base64
-  end
-
   def save
     $redis.hset(SESSION_KEY, @session_token, @user_id)
   end
 
   def delete
     $redis.hdel(SESSION_KEY, @session_token) == 1 ? true : false
+  end
+
+  private
+
+  def generate_session_token!
+    @session_token = SecureRandom.urlsafe_base64
   end
 end

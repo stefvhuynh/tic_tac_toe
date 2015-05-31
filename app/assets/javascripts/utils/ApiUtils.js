@@ -2,6 +2,28 @@ import $ from 'jquery';
 import ChangeCase from 'change-case';
 
 const ApiUtils = {
+  getGame(successCallback, errorCallback) {
+    this.makeAjaxRequest(
+      '/api/game/',
+      'GET',
+      {},
+      {},
+      successCallback,
+      errorCallback
+    );
+  },
+
+  updateGame(data, successCallback, errorCallback) {
+    this.makeAjaxRequest(
+      '/api/game/',
+      'PUT',
+      { game: data },
+      {},
+      successCallback,
+      errorCallback
+    );
+  },
+
   getSession(sessionToken, successCallback, errorCallback) {
     this.makeAjaxRequest(
       '/api/session/',
