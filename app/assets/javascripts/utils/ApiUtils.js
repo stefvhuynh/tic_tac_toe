@@ -26,7 +26,7 @@ const ApiUtils = {
 
   createUser(username, password, successCallback, errorCallback) {
     this.makeAjaxRequest(
-      '/api/users/',
+      '/api/user/',
       'POST',
       { user: { username: username, password: password } },
       {},
@@ -37,7 +37,7 @@ const ApiUtils = {
 
   updateUser(data, sessionToken, successCallback, errorCallback) {
     this.makeAjaxRequest(
-      '/api/users/',
+      '/api/user/',
       'PUT',
       { user: data },
       { 'X-Session-Token': sessionToken },

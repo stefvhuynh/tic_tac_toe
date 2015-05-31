@@ -1,6 +1,7 @@
 import Marty from 'marty';
 import Immutable from 'immutable';
 import UserConstants from 'constants/UserConstants';
+import GameConstants from 'constants/GameConstants';
 
 class UserStore extends Marty.Store {
   constructor(options) {
@@ -13,7 +14,8 @@ class UserStore extends Marty.Store {
     this.draws;
 
     this.handlers = {
-      _loadUser: UserConstants.LOAD_USER
+      _loadUser: UserConstants.LOAD_USER,
+      _updateWins: GameConstants.WIN_GAME
     };
   }
 
@@ -37,6 +39,11 @@ class UserStore extends Marty.Store {
     this.wins = user.wins;
     this.losses = user.losses;
     this.draws = user.draws;
+    this.hasChanged();
+  }
+
+  _updateWins(wins) {
+    this.wins = wins;
     this.hasChanged();
   }
 }

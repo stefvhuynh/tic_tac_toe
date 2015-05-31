@@ -9,7 +9,8 @@ class GameActions extends Marty.ActionCreators {
   }
 
   winGame(wins) {
-    this.dispatch(GameConstants.WIN_GAME);
+    ApiUtils.updateUser({ wins }, CookieUtils.getSessionCookie());
+    this.dispatch(GameConstants.WIN_GAME, wins);
   }
 
   loseGame() {
