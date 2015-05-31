@@ -13,6 +13,7 @@ class GamePage extends React.Component {
   }
 
   render() {
+    const errorMessage = <h2>{ this.props.gameState.get('error') }</h2>;
     let winnerMessage;
 
     if (this.props.gameState.get('gameOver')) {
@@ -30,6 +31,7 @@ class GamePage extends React.Component {
     return(
       <div className="GamePage">
         <Link to="front-page">Back</Link>
+        { errorMessage }
         { winnerMessage }
         <Board/>
       </div>

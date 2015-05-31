@@ -56,14 +56,14 @@ class UserActions extends Marty.ActionCreators {
     ApiUtils.getSession(
       CookieUtils.getSessionCookie(),
       user => this.loadUser(user),
-      errors => this.failGetUser(errors)
+      errors => this.failGetSession(errors)
     );
 
     this.dispatch(UserConstants.GET_SESSION_STARTING);
   }
 
-  failGetUser(errors) {
-    this.dispatch(UserConstants.LOAD_USER_FAILED, errors);
+  failGetSession(errors) {
+    this.dispatch(UserConstants.GET_SESSION_FAILED, errors);
   }
 
   logOut() {
