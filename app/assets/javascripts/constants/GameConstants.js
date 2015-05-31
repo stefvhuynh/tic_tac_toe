@@ -2,7 +2,8 @@ import Marty from 'marty';
 
 const GameConstants = Marty.createConstants([
   'UPDATE_BOARD',
-  'UPDATE_WINNER',
+  'WIN_GAME',
+  'LOSE_GAME',
   'DRAW_GAME',
   'INVALIDATE_MOVE',
   'EASY',

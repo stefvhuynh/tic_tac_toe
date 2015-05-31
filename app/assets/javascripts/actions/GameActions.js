@@ -6,8 +6,12 @@ class GameActions extends Marty.ActionCreators {
     this.dispatch(GameConstants.UPDATE_BOARD, board);
   }
 
-  updateWinner(winner) {
-    this.dispatch(GameConstants.UPDATE_WINNER, winner);
+  winGame() {
+    this.dispatch(GameConstants.WIN_GAME);
+  }
+
+  loseGame() {
+    this.dispatch(GameConstants.LOSE_GAME);
   }
 
   drawGame() {

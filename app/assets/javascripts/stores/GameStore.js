@@ -1,16 +1,22 @@
 import Marty from 'marty';
 import Immutable from 'immutable';
 import GameConstants from 'constants/GameConstants';
+import MarkMapping from 'constants/MarkMapping';
 
 class GameStore extends Marty.Store {
   constructor(options) {
     super(options);
 
-    this.board = Immutable.List.of(
-      Immutable.List.of('E', 'E', 'E'),
-      Immutable.List.of('E', 'E', 'E'),
-      Immutable.List.of('E', 'E', 'E')
-    );
+    this.board = Immutable.List();
+    for (let i = 0; i < 3; i++) {
+      let emptyList = Immutable.List.of(
+        MarkMapping.get('empty'),
+        MarkMapping.get('empty'),
+        MarkMapping.get('empty')
+      );
+
+      this.board = this.board.push(emptyList);
+    }
 
     this.gameOver = false;
     this.winner;
@@ -18,7 +24,8 @@ class GameStore extends Marty.Store {
 
     this.handlers = {
       _updateBoard: GameConstants.UPDATE_BOARD,
-      _updateWinner: GameConstants.UPDATE_WINNER,
+      _winGame: GameConstants.WIN_GAME,
+      _loseGame: GameConstants.LOSE_GAME,
       _drawGame: GameConstants.DRAW_GAME,
       _invalidateMove: GameConstants.INVALIDATE_MOVE
     };
@@ -37,6 +44,14 @@ class GameStore extends Marty.Store {
     this._clearError();
     this.board = board;
     this.hasChanged();
+  }
+
+  _winGame() {
+    this._updateWinner(MarkMapping.get('user'));
+  }
+
+  _loseGame() {
+    this._updateWinner(MarkMapping.get('computer'));
   }
 
   _updateWinner(winner) {

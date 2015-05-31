@@ -68,10 +68,10 @@ class Board extends React.Component {
     const winner = this.game.getWinner();
 
     if (winner === MarkMapping.get('user')) {
-      GameActions.updateWinner(MarkMapping.get('user'));
+      GameActions.winGame();
       return true;
     } else if (winner === MarkMapping.get('computer')) {
-      GameActions.updateWinner(MarkMapping.get('computer'));
+      GameActions.loseGame();
       return true;
     } else if (this.game.isDraw()) {
       GameActions.drawGame();
