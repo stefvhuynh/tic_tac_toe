@@ -14,10 +14,13 @@ class GameStore extends Marty.Store {
 
     this.gameOver = false;
     this.winner;
+    this.error;
 
     this.handlers = {
       _updateBoard: GameConstants.UPDATE_BOARD,
-      _updateState: GameConstants.UPDATE_STATE
+      _updateWinner: GameConstants.UPDATE_WINNER,
+      _drawGame: GameConstants.DRAW_GAME,
+      _invalidateMove: GameConstants.INVALIDATE_MOVE
     };
   }
 
@@ -25,23 +28,35 @@ class GameStore extends Marty.Store {
     return Immutable.Map({
       board: this.board,
       gameOver: this.gameOver,
-      winner: this.winner
+      winner: this.winner,
+      error: this.error
     });
   }
 
   _updateBoard(board) {
+    this._clearError();
     this.board = board;
-    this.hasChanged();
-  }
-
-  _updateState(gameOver) {
-    this.gameOver = gameOver;
     this.hasChanged();
   }
 
   _updateWinner(winner) {
     this.winner = winner;
+    this.gameOver = true;
     this.hasChanged();
+  }
+
+  _drawGame() {
+    this.gameOver = true;
+    this.hasChanged();
+  }
+
+  _invalidateMove() {
+    this.error = 'Invalid move';
+    this.hasChanged();
+  }
+
+  _clearError() {
+    this.error = null;
   }
 }
 

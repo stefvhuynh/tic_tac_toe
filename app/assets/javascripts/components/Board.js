@@ -1,5 +1,6 @@
 import React from 'react';
 import Marty from 'marty';
+import MarkMapping from 'constants/MarkMapping';
 import GameConstants from 'constants/GameConstants';
 import GameActions from 'actions/GameActions';
 import GameStore from 'stores/GameStore';
@@ -48,6 +49,12 @@ class Board extends React.Component {
       if (!this.props.gameState.get('gameOver')) {
         if (this.game.makeUserMove(rowIndex, cellIndex)) {
           GameActions.updateBoard(this.game.getBoard());
+
+          if (!this._checkGameEnded()) {
+            this.game.makeComputerMove();
+            GameActions.updateBoard(this.game.getBoard());
+            this._checkGameEnded();
+          }
         } else {
           GameActions.invalidateMove();
         }
@@ -55,6 +62,23 @@ class Board extends React.Component {
     };
 
     return boundFn;
+  }
+
+  _checkGameEnded() {
+    const winner = this.game.getWinner();
+
+    if (winner === MarkMapping.get('user')) {
+      GameActions.updateWinner(MarkMapping.get('user'));
+      return true;
+    } else if (winner === MarkMapping.get('computer')) {
+      GameActions.updateWinner(MarkMapping.get('computer'));
+      return true;
+    } else if (this.game.isDraw()) {
+      GameActions.drawGame();
+      return true;
+    }
+
+    return false;
   }
 }
 

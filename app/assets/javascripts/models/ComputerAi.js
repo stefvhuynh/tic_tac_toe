@@ -1,4 +1,5 @@
 import Immutable from 'immutable';
+import MarkMapping from 'constants/MarkMapping';
 import GameConstants from 'constants/GameConstants';
 
 class ComputerAi {
@@ -17,7 +18,7 @@ class ComputerAi {
       let randomRow = Math.floor(Math.random() * 3);
       let randomCell = Math.floor(Math.random() * 3);
 
-      if (board.get(randomRow).get(randomCell) === 'E') {
+      if (board.get(randomRow).get(randomCell) === MarkMapping.get('empty')) {
         return Immutable.Map({ rowIndex: randomRow, cellIndex: randomCell });
       }
     }

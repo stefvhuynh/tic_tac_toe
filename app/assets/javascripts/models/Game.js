@@ -1,3 +1,4 @@
+import MarkMapping from 'constants/MarkMapping';
 import ComputerAi from 'models/ComputerAi';
 
 class Game {
@@ -25,12 +26,16 @@ class Game {
   }
 
   makeUserMove(rowIndex, cellIndex) {
-    return this.makeMove(rowIndex, cellIndex, 'X');
+    return this.makeMove(rowIndex, cellIndex, MarkMapping.get('user'));
   }
 
   makeComputerMove() {
     const move = this.computerAi.chooseMove(this.board);
-    return this.makeMove(move.get('rowIndex'), move.get('cellIndex'), 'O');
+    return this.makeMove(
+      move.get('rowIndex'),
+      move.get('cellIndex'),
+      MarkMapping.get('computer')
+    );
   }
 
   makeMove(rowIndex, cellIndex, mark) {
@@ -58,7 +63,7 @@ class Game {
 
     this.board.forEach(row => {
       row.forEach(cell => {
-        if (cell === 'E') {
+        if (cell === MarkMapping.get('empty')) {
           filled = false;
         }
       });
@@ -68,7 +73,7 @@ class Game {
   }
 
   _isValidMove(rowIndex, cellIndex) {
-    return this.getCell(rowIndex, cellIndex) === 'E';
+    return this.getCell(rowIndex, cellIndex) === MarkMapping.get('empty');
   }
 
   _checkRowWin() {
