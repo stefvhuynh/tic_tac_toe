@@ -4,21 +4,10 @@ import ComputerAi from 'models/ComputerAi';
 class Game {
   constructor(board, difficulty) {
     this.board = board;
-    this.difficulty = difficulty;
     this.computerAi = new ComputerAi(difficulty);
+    this.gameOver = false;
+    this.isDraw = false;
     this.winner;
-  }
-
-  getBoard() {
-    return this.board;
-  }
-
-  getWinner() {
-    if (this.hasWon()) {
-      return this.winner;
-    }
-
-    return null;
   }
 
   getCell(rowIndex, cellIndex) {
@@ -45,20 +34,35 @@ class Game {
 
     const newRow = this.board.get(rowIndex).set(cellIndex, mark);
     this.board = this.board.set(rowIndex, newRow);
+    this._checkForGameOver();
     return true;
   }
 
-  isDraw() {
-    return this.isBoardFilled() && !this.hasWon();
+  _isValidMove(rowIndex, cellIndex) {
+    return this.getCell(rowIndex, cellIndex) === MarkMapping.get('empty');
   }
 
-  hasWon() {
+  _checkForGameOver() {
+    return this._checkForWinner() || this._checkForDraw();
+  }
+
+  _checkForWinner() {
     return(
-      this._checkRowWin() || this._checkColumnWin() || this._checkDiagonalWin()
+      this._checkForRowWin() || this._checkForColumnWin() ||
+        this._checkForDiagonalWin()
     );
   }
 
-  isBoardFilled() {
+  _checkForDraw() {
+    if (this._isBoardFilled() && !this.winner) {
+      this.isDraw = true;
+      this.gameOver = true;
+    }
+
+    return this.isDraw;
+  }
+
+  _isBoardFilled() {
     let filled = true;
 
     this.board.forEach(row => {
@@ -72,64 +76,76 @@ class Game {
     return filled;
   }
 
-  _isValidMove(rowIndex, cellIndex) {
-    return this.getCell(rowIndex, cellIndex) === MarkMapping.get('empty');
-  }
-
-  _checkRowWin() {
+  _checkForRowWin() {
     for (let i = 0; i < 3; i++) {
+      if (this.getCell(i, 0) === MarkMapping.get('empty')) {
+        continue;
+      }
+
       const firstTwoEqual = this.getCell(i, 0) === this.getCell(i, 1);
       const lastTwoEqual = this.getCell(i, 1) === this.getCell(i, 2);
 
       if (firstTwoEqual && lastTwoEqual) {
         this.winner = this.getCell(i, 0);
-        return true;
+        this.gameOver = true;
       }
     }
 
-    return false;
+    return this.gameOver;
   }
 
-  _checkColumnWin() {
+  _checkForColumnWin() {
     for (let i = 0; i < 3; i++) {
+      if (this.getCell(0, i) === MarkMapping.get('empty')) {
+        continue;
+      }
+
       const firstTwoEqual = this.getCell(0, i) === this.getCell(1, i);
       const lastTwoEqual = this.getCell(1, i) === this.getCell(2, i);
 
       if (firstTwoEqual && lastTwoEqual) {
         this.winner = this.getCell(0, i);
-        return true;
+        this.gameOver = true;
       }
     }
 
-    return false;
+    return this.gameOver;
   }
 
-  _checkDiagonalWin() {
-    return this._checkLeftDiagonalWin() || this._checkRightDiagonalWin();
+  _checkForDiagonalWin() {
+    return this._checkForLeftDiagonalWin() || this._checkForRightDiagonalWin();
   }
 
-  _checkLeftDiagonalWin() {
+  _checkForLeftDiagonalWin() {
+    if (this.getCell(0, 0) === MarkMapping.get('empty')) {
+      return false;
+    }
+
     const firstTwoEqual = this.getCell(0, 0) === this.getCell(1, 1);
     const lastTwoEqual = this.getCell(1, 1) === this.getCell(2, 2);
 
     if (firstTwoEqual && lastTwoEqual) {
       this.winner = this.getCell(0, 0);
-      return true;
+      this.gameOver = true;
     }
 
-    return false;
+    return this.gameOver;
   }
 
-  _checkRightDiagonalWin() {
+  _checkForRightDiagonalWin() {
+    if (this.getCell(0, 2) === MarkMapping.get('empty')) {
+      return false;
+    }
+
     const firstTwoEqual = this.getCell(0, 2) === this.getCell(1, 1);
     const lastTwoEqual = this.getCell(1, 1) === this.getCell(2, 0);
 
     if (firstTwoEqual && lastTwoEqual) {
       this.winner = this.getCell(0, 2);
-      return true;
+      this.gameOver = true;
     }
 
-    return false;
+    return this.gameOver;
   }
 }
 

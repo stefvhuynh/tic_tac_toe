@@ -28,12 +28,10 @@ class Board extends React.Component {
 
     const rows = board.map((row, rowIndex) => {
       const cells = row.map((cell, cellIndex) => {
-        return(
-          <td onClick={ this._onCellClick(rowIndex, cellIndex) }
-            key={ cellIndex }>
-            { cell }
-          </td>
-        );
+        const clickHandler =
+          this.game.gameOver ? null : this._onCellClick(rowIndex, cellIndex);
+
+        return <td key={ cellIndex } onClick={ clickHandler }>{ cell }</td>;
       });
 
       return <tr key={ rowIndex }>{ cells }</tr>;
@@ -46,17 +44,15 @@ class Board extends React.Component {
     const boundFn = event => {
       event.preventDefault();
 
-      if (!this.props.gameState.get('gameOver')) {
-        if (this.game.makeUserMove(rowIndex, cellIndex)) {
-          if (!this._checkGameEnded()) {
-            this.game.makeComputerMove();
-            this._checkGameEnded();
-          }
-
-          GameActions.updateBoard(this.game.getBoard());
-        } else {
-          GameActions.invalidateMove();
+      if (this.game.makeUserMove(rowIndex, cellIndex)) {
+        if (!this._checkGameEnded()) {
+          this.game.makeComputerMove();
+          this._checkGameEnded();
         }
+
+        GameActions.updateBoard(this.game.board);
+      } else {
+        GameActions.invalidateMove();
       }
     };
 
@@ -64,20 +60,20 @@ class Board extends React.Component {
   }
 
   _checkGameEnded() {
-    const winner = this.game.getWinner();
-
-    if (winner === MarkMapping.get('user')) {
-      GameActions.winGame();
-      return true;
-    } else if (winner === MarkMapping.get('computer')) {
-      GameActions.loseGame();
-      return true;
-    } else if (this.game.isDraw()) {
-      GameActions.drawGame();
-      return true;
+    if (!this.game.gameOver) {
+      return false;
     }
 
-    return false;
+    if (this.game.isDraw) {
+      GameActions.drawGame();
+      return true;
+    } else if (this.game.winner === MarkMapping.get('user')) {
+      GameActions.winGame();
+      return true;
+    } else if (this.game.winner === MarkMapping.get('computer')) {
+      GameActions.loseGame();
+      return true;
+    }
   }
 }
 
