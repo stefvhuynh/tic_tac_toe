@@ -48,13 +48,12 @@ class Board extends React.Component {
 
       if (!this.props.gameState.get('gameOver')) {
         if (this.game.makeUserMove(rowIndex, cellIndex)) {
-          GameActions.updateBoard(this.game.getBoard());
-
           if (!this._checkGameEnded()) {
             this.game.makeComputerMove();
-            GameActions.updateBoard(this.game.getBoard());
             this._checkGameEnded();
           }
+
+          GameActions.updateBoard(this.game.getBoard());
         } else {
           GameActions.invalidateMove();
         }
