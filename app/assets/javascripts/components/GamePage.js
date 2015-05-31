@@ -1,6 +1,7 @@
 import React from 'react';
 import Marty from 'marty';
 import Router from 'react-router';
+import MarkMapping from 'constants/MarkMapping';
 import GameStore from 'stores/GameStore';
 import Board from 'components/Board';
 
@@ -17,10 +18,12 @@ class GamePage extends React.Component {
     if (this.props.gameState.get('gameOver')) {
       const winner = this.props.gameState.get('winner');
 
-      if (winner) {
-        winnerMessage = <h1>{ `The winner is ${winner}!` }</h1>;
+      if (winner === MarkMapping.get('user')) {
+        winnerMessage = <h1>You are the winner!</h1>;
+      } else if (winner === MarkMapping.get('computer')) {
+        winnerMessage = <h1>You lost...</h1>
       } else {
-        winnerMessage = <h1>'This is a draw!'</h1>;
+        winnerMessage = <h1>Game is a draw.</h1>;
       }
     }
 
