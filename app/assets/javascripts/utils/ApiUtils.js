@@ -35,6 +35,17 @@ const ApiUtils = {
     );
   },
 
+  updateUser(data, sessionToken, successCallback, errorCallback) {
+    this.makeAjaxRequest(
+      '/api/users/',
+      'PUT',
+      { user: data },
+      { 'X-Session-Token': sessionToken },
+      successCallback,
+      errorCallback
+    );
+  },
+
   createSession(username, password, successCallback, errorCallback) {
     this.makeAjaxRequest(
       '/api/session/',

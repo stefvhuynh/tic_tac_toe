@@ -10,9 +10,9 @@ class UserStats extends React.Component {
   render() {
     return(
       <div className="UserStats">
-        <h3>Wins: { this.props.user.wins }</h3>
-        <h3>Losses: { this.props.user.losses }</h3>
-        <h3>Draws: { this.props.user.draws }</h3>
+        <h3>Wins: { this.props.user.get('wins') }</h3>
+        <h3>Losses: { this.props.user.get('losses') }</h3>
+        <h3>Draws: { this.props.user.get('draws') }</h3>
       </div>
     );
   }

@@ -3,7 +3,6 @@ import Marty from 'marty';
 import Router from 'react-router';
 import CookieUtils from 'utils/CookieUtils';
 import UserActions from 'actions/UserActions';
-import UserStore from 'stores/UserStore';
 import LogIn from 'components/LogIn';
 import SignUp from 'components/SignUp';
 import UserStats from 'components/UserStats';
@@ -19,9 +18,6 @@ class FrontPage extends React.Component {
     let userSection;
 
     if (CookieUtils.isLoggedIn()) {
-      if (!this.props.hasLoadedUser) {
-        UserActions.attemptGetSession();
-      }
       userSection = (
         <div>
           <button onClick={ this._onLogOutClick() }>Log Out</button>
@@ -55,11 +51,4 @@ class FrontPage extends React.Component {
   }
 }
 
-export default Marty.createContainer(FrontPage, {
-  listenTo: UserStore,
-  fetch: {
-    hasLoadedUser() {
-      return UserStore.hasLoadedUser();
-    }
-  }
-});
+export default FrontPage;

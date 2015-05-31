@@ -4,6 +4,7 @@ import MarkMapping from 'constants/MarkMapping';
 import GameConstants from 'constants/GameConstants';
 import GameActions from 'actions/GameActions';
 import GameStore from 'stores/GameStore';
+import UserStore from 'stores/UserStore';
 import Game from 'models/Game';
 
 class Board extends React.Component {
@@ -68,7 +69,7 @@ class Board extends React.Component {
       GameActions.drawGame();
       return true;
     } else if (this.game.winner === MarkMapping.get('user')) {
-      GameActions.winGame();
+      GameActions.winGame(this.props.user.get('wins') + 1);
       return true;
     } else if (this.game.winner === MarkMapping.get('computer')) {
       GameActions.loseGame();
@@ -78,10 +79,14 @@ class Board extends React.Component {
 }
 
 export default Marty.createContainer(Board, {
-  listenTo: GameStore,
+  listenTo: [GameStore, UserStore],
   fetch: {
     gameState() {
       return GameStore.getGameState();
+    },
+
+    user() {
+      return UserStore.getUser();
     }
   }
 });

@@ -1,4 +1,5 @@
 import Marty from 'marty';
+import Immutable from 'immutable';
 import UserConstants from 'constants/UserConstants';
 
 class UserStore extends Marty.Store {
@@ -17,13 +18,13 @@ class UserStore extends Marty.Store {
   }
 
   getUser() {
-    return {
+    return Immutable.Map({
       userId: this.userId,
       username: this.username,
       wins: this.wins,
       losses: this.losses,
       draws: this.draws
-    }
+    });
   }
 
   hasLoadedUser() {
