@@ -2,9 +2,9 @@ import $ from 'jquery';
 import ChangeCase from 'change-case';
 
 const ApiUtils = {
-  getGame(successCallback, errorCallback) {
+  getGameSummary(successCallback, errorCallback) {
     this.makeAjaxRequest(
-      '/api/game/',
+      '/api/game_summary/',
       'GET',
       {},
       {},
@@ -13,11 +13,11 @@ const ApiUtils = {
     );
   },
 
-  updateGame(data, successCallback, errorCallback) {
+  updateGameSummary(data, successCallback, errorCallback) {
     this.makeAjaxRequest(
-      '/api/game/',
+      '/api/game_summary/',
       'PUT',
-      { game: data },
+      { gameSummary: data },
       {},
       successCallback,
       errorCallback

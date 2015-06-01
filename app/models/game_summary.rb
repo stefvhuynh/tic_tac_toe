@@ -1,7 +1,7 @@
-class Game
+class GameSummary
   include Singleton
 
-  GAME_KEY = 'game'
+  GAME_KEY = 'game_summary'
 
   def initialize
     self.ensure_game_exists!
@@ -28,8 +28,6 @@ class Game
   def games_played
     $redis.hget(GAME_KEY, 'games_played')
   end
-
-  private
 
   def ensure_game_exists!
     unless $redis.exists(GAME_KEY)

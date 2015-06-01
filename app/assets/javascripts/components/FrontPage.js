@@ -6,6 +6,7 @@ import UserActions from 'actions/UserActions';
 import LogIn from 'components/LogIn';
 import SignUp from 'components/SignUp';
 import UserStats from 'components/UserStats';
+import GameSummary from 'components/GameSummary';
 
 const { RouteHandler, Link } = Router;
 
@@ -35,6 +36,7 @@ class FrontPage extends React.Component {
 
     return(
       <div className="FrontPage">
+        <GameSummary/>
         <Link to="game-page">Play Game</Link>
         { userSection }
       </div>
