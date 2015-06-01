@@ -2,7 +2,9 @@ import React from 'react';
 import Marty from 'marty';
 import Router from 'react-router';
 import MarkMapping from 'constants/MarkMapping';
+import GameSummaryActions from 'actions/GameSummaryActions';
 import GameStore from 'stores/GameStore';
+import GameSummaryStore from 'stores/GameSummaryStore';
 import Board from 'components/Board';
 
 const { Link } = Router;
@@ -10,6 +12,18 @@ const { Link } = Router;
 class GamePage extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    GameSummaryActions.updateGameSummary({
+      activeGames: this.props.gameSummary.get('activeGames') + 1
+    });
+  }
+
+  componentWillUnmount() {
+    GameSummaryActions.updateGameSummary({
+      activeGames: this.props.gameSummary.get('activeGames')
+    });
   }
 
   render() {
@@ -40,10 +54,14 @@ class GamePage extends React.Component {
 }
 
 export default Marty.createContainer(GamePage, {
-  listenTo: GameStore,
+  listenTo: [GameSummaryStore, GameStore],
   fetch: {
     gameState() {
       return GameStore.getGameState();
+    },
+
+    gameSummary() {
+      return GameSummaryStore.getGameSummary();
     }
   }
 });

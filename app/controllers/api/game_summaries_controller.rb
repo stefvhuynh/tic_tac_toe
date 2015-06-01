@@ -13,6 +13,7 @@ class Api::GameSummariesController < ApplicationController
   private
 
   def game_summary_params
-    params.require(:game_summary).permit(:games_played, :wins, :losses, :draws)
+    params.require(:game_summary)
+      .permit(:active_games, :games_played, :wins, :losses, :draws)
   end
 end

@@ -11,6 +11,8 @@ class GameSummaryStore extends Marty.Store {
     this.losses;
     this.draws;
     this.gamesPlayed;
+    this.activeGames;
+    this.hasLoaded = false;
 
     this.handlers = {
       _loadGameSummary: GameSummaryConstants.GET_GAME_SUMMARY_DONE,
@@ -25,18 +27,20 @@ class GameSummaryStore extends Marty.Store {
       wins: this.wins,
       losses: this.losses,
       draws: this.draws,
-      gamesPlayed: this.gamesPlayed
+      gamesPlayed: this.gamesPlayed,
+      activeGames: this.activeGames
     });
   }
 
-  hasLoadedSummary() {
-    return this.wins ? true : false;
+  hasLoadedGameSummary() {
+    return this.hasLoaded;
   }
 
   _loadGameSummary(gameSummary) {
     Object.keys(gameSummary).forEach(key => {
       this[key] = parseInt(gameSummary[key])
     });
+    this.hasLoaded = true;
     this.hasChanged();
   }
 

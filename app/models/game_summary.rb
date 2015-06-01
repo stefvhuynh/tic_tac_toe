@@ -14,6 +14,7 @@ class GameSummary
       $redis.hset(GAME_KEY, 'losses', 0)
       $redis.hset(GAME_KEY, 'draws', 0)
       $redis.hset(GAME_KEY, 'games_played', 0)
+      $redis.hset(GAME_KEY, 'active_games', 0)
     end
   end
 
@@ -37,5 +38,9 @@ class GameSummary
 
   def games_played
     $redis.hget(GAME_KEY, 'games_played')
+  end
+
+  def active_games
+    $redis.hget(GAME_KEY, 'active_games')
   end
 end

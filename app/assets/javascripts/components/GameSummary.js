@@ -9,9 +9,7 @@ class GameSummary extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.hasLoadedGameSummary) {
-      GameSummaryActions.attemptGetGameSummary();
-    }
+    GameSummaryActions.attemptGetGameSummary();
   }
 
   render() {
@@ -22,6 +20,9 @@ class GameSummary extends React.Component {
         <h3>{ `Draws: ${this.props.gameSummary.get('draws')}` }</h3>
         <h3>
           { `Games Played: ${this.props.gameSummary.get('gamesPlayed')}` }
+        </h3>
+        <h3>
+          { `Active Games: ${this.props.gameSummary.get('activeGames')}` }
         </h3>
       </div>
     );
@@ -36,7 +37,7 @@ export default Marty.createContainer(GameSummary, {
     },
 
     hasLoadedGameSummary() {
-      return GameSummaryStore.hasLoadedSummary();
+      return GameSummaryStore.hasLoadedGameSummary();
     }
   }
 });
