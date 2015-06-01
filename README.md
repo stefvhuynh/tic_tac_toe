@@ -167,11 +167,11 @@ Response:
 Parameters:
 {
   game_summary: {
-    wins: ... ,
-    losses: ... ,
-    draws: ... ,
-    games_played: ... ,
-    active_games: ...
+    wins: 'increment' || 'decrement',
+    losses: 'increment' || 'decrement',
+    draws: 'increment' || 'decrement',
+    games_played: 'increment' || 'decrement',
+    active_games: 'increment' || 'decrement'
   }
 }
 
