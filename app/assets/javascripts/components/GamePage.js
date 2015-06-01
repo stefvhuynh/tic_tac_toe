@@ -45,9 +45,9 @@ class GamePage extends React.Component {
     return(
       <div className="GamePage">
         <Link to="front-page">Back</Link>
+        <Board/>
         { errorMessage }
         { winnerMessage }
-        <Board/>
       </div>
     );
   }

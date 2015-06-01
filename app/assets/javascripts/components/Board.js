@@ -12,8 +12,13 @@ import Game from 'models/Game';
 class Board extends React.Component {
   constructor(props) {
     super(props);
+
     const board = this.props.gameState.get('board');
     this.game = new Game(board, GameConstants.EASY);
+  }
+
+  componentWillUnmount() {
+    GameActions.resetGameState();
   }
 
   render() {

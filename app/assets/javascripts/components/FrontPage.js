@@ -30,7 +30,9 @@ class FrontPage extends React.Component {
       userSection = (
         <div>
           <LogIn/>
+          <div>--or--</div>
           <SignUp/>
+          <div>to keep track of your score.</div>
         </div>
       );
     }

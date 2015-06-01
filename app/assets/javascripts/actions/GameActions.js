@@ -26,6 +26,10 @@ class GameActions extends Marty.ActionCreators {
   invalidateMove() {
     this.dispatch(GameConstants.INVALIDATE_MOVE);
   }
+
+  resetGameState() {
+    this.dispatch(GameConstants.RESET_GAME_STATE);
+  }
 }
 
 export default Marty.register(GameActions);

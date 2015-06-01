@@ -7,11 +7,11 @@ class GameSummaryStore extends Marty.Store {
   constructor(options) {
     super(options)
 
-    this.wins;
-    this.losses;
-    this.draws;
-    this.gamesPlayed;
-    this.activeGames;
+    this.wins = null;
+    this.losses = null;
+    this.draws = null;
+    this.gamesPlayed = null;
+    this.activeGames = null;
     this.hasLoaded = false;
 
     this.handlers = {

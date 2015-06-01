@@ -7,27 +7,18 @@ class GameStore extends Marty.Store {
   constructor(options) {
     super(options);
 
-    this.board = Immutable.List();
-    for (let i = 0; i < 3; i++) {
-      let emptyList = Immutable.List.of(
-        MarkMapping.get('empty'),
-        MarkMapping.get('empty'),
-        MarkMapping.get('empty')
-      );
-
-      this.board = this.board.push(emptyList);
-    }
-
+    this.board = this._generateEmptyBoard();
     this.gameOver = false;
-    this.winner;
-    this.error;
+    this.winner = null;
+    this.error = null;
 
     this.handlers = {
       _updateBoard: GameConstants.UPDATE_BOARD,
       _winGame: GameConstants.WIN_GAME,
       _loseGame: GameConstants.LOSE_GAME,
       _drawGame: GameConstants.DRAW_GAME,
-      _invalidateMove: GameConstants.INVALIDATE_MOVE
+      _invalidateMove: GameConstants.INVALIDATE_MOVE,
+      _resetGameState: GameConstants.RESET_GAME_STATE
     };
   }
 
@@ -38,6 +29,28 @@ class GameStore extends Marty.Store {
       winner: this.winner,
       error: this.error
     });
+  }
+
+  _resetGameState() {
+    this.board = this._generateEmptyBoard();
+    this.gameOver = false;
+    this.winner = null;
+    this.error = null;
+  }
+
+  _generateEmptyBoard() {
+    let board = Immutable.List();
+
+    for (let i = 0; i < 3; i++) {
+      let emptyList = Immutable.List.of(
+        MarkMapping.get('empty'),
+        MarkMapping.get('empty'),
+        MarkMapping.get('empty')
+      );
+
+      board = board.push(emptyList);
+    }
+    return board;
   }
 
   _updateBoard(board) {

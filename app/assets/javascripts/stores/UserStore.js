@@ -7,11 +7,11 @@ class UserStore extends Marty.Store {
   constructor(options) {
     super(options);
 
-    this.userId;
-    this.username;
-    this.wins;
-    this.losses;
-    this.draws;
+    this.userId = null;
+    this.username = null;
+    this.wins = null;
+    this.losses = null;
+    this.draws = null;
     this.loggedIn = false;
 
     this.handlers = {

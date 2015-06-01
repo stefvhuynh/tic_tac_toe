@@ -6,6 +6,7 @@ const GameConstants = Marty.createConstants([
   'LOSE_GAME',
   'DRAW_GAME',
   'INVALIDATE_MOVE',
+  'RESET_GAME_STATE',
   'EASY',
   'MEDIUM',
   'HARD'
