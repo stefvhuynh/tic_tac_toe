@@ -15,15 +15,11 @@ class GamePage extends React.Component {
   }
 
   componentDidMount() {
-    GameSummaryActions.updateGameSummary({
-      activeGames: this.props.gameSummary.get('activeGames') + 1
-    });
+    GameSummaryActions.updateGameSummary({ activeGames: 'increment' });
   }
 
   componentWillUnmount() {
-    GameSummaryActions.updateGameSummary({
-      activeGames: this.props.gameSummary.get('activeGames')
-    });
+    GameSummaryActions.updateGameSummary({ activeGames: 'decrement' });
   }
 
   render() {

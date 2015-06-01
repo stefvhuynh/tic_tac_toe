@@ -20,7 +20,15 @@ class GameSummary
 
   def update(params)
     params.each do |key, value|
-      $redis.hset(GAME_KEY, key, value) if $redis.hget(GAME_KEY, key)
+      old_value = $redis.hget(GAME_KEY, key)
+
+      if old_value
+        if value == 'increment'
+          $redis.hset(GAME_KEY, key, old_value.to_i + 1)
+        elsif value == 'decrement'
+          $redis.hset(GAME_KEY, key, old_value.to_i - 1)
+        end
+      end
     end
   end
 
