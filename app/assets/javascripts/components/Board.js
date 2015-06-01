@@ -70,21 +70,24 @@ class Board extends React.Component {
     if (this.game.isDraw) {
       GameActions.drawGame(this.props.user.get('draws') + 1);
       GameSummaryActions.updateGameSummary({
-        draws: this.props.gameSummary.get('draws') + 1
+        draws: this.props.gameSummary.get('draws') + 1,
+        gamesPlayed: this.props.gameSummary.get('gamesPlayed') + 1
       });
       return true;
 
     } else if (this.game.winner === MarkMapping.get('user')) {
       GameActions.winGame(this.props.user.get('wins') + 1);
       GameSummaryActions.updateGameSummary({
-        losses: this.props.gameSummary.get('losses') + 1
+        losses: this.props.gameSummary.get('losses') + 1,
+        gamesPlayed: this.props.gameSummary.get('gamesPlayed') + 1
       });
       return true;
 
     } else if (this.game.winner === MarkMapping.get('computer')) {
       GameActions.loseGame(this.props.user.get('losses') + 1);
       GameSummaryActions.updateGameSummary({
-        wins: this.props.gameSummary.get('wins') + 1
+        wins: this.props.gameSummary.get('wins') + 1,
+        gamesPlayed: this.props.gameSummary.get('gamesPlayed') + 1
       });
       return true;
     }
@@ -95,7 +98,7 @@ export default Marty.createContainer(Board, {
   listenTo: [GameSummaryStore, GameStore, UserStore],
   fetch: {
     gameSummary() {
-      return GameStore.getGameSummary();
+      return GameSummaryStore.getGameSummary();
     },
 
     gameState() {

@@ -12,12 +12,14 @@ class UserStore extends Marty.Store {
     this.wins;
     this.losses;
     this.draws;
+    this.loggedIn = false;
 
     this.handlers = {
       _loadUser: UserConstants.LOAD_USER,
       _updateWins: GameConstants.WIN_GAME,
       _updateLosses: GameConstants.LOSE_GAME,
-      _updateDraws: GameConstants.DRAW_GAME
+      _updateDraws: GameConstants.DRAW_GAME,
+      _logOut: UserConstants.LOG_OUT
     };
   }
 
@@ -35,12 +37,22 @@ class UserStore extends Marty.Store {
     return this.userId ? true : false;
   }
 
+  isLoggedIn() {
+    return this.loggedIn;
+  }
+
   _loadUser(user) {
     this.userId = user.id;
     this.username = user.username;
     this.wins = user.wins;
     this.losses = user.losses;
     this.draws = user.draws;
+    this.loggedIn = true;
+    this.hasChanged();
+  }
+
+  _logOut() {
+    this.loggedIn = false;
     this.hasChanged();
   }
 

@@ -31,8 +31,6 @@ class Session
     $redis.hdel(SESSION_KEY, @session_token) == 1 ? true : false
   end
 
-  private
-
   def generate_session_token!
     @session_token = SecureRandom.urlsafe_base64
   end
