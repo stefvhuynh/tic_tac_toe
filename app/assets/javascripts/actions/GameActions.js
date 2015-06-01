@@ -15,12 +15,12 @@ class GameActions extends Marty.ActionCreators {
 
   loseGame(losses) {
     ApiUtils.updateUser({ losses }, CookieUtils.getSessionCookie());
-    this.dispatch(GameConstants.LOSE_GAME);
+    this.dispatch(GameConstants.LOSE_GAME, losses);
   }
 
   drawGame(draws) {
     ApiUtils.updateUser({ draws }, CookieUtils.getSessionCookie());
-    this.dispatch(GameConstants.DRAW_GAME);
+    this.dispatch(GameConstants.DRAW_GAME, draws);
   }
 
   invalidateMove() {

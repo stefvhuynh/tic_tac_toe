@@ -3,7 +3,9 @@ import Marty from 'marty';
 import MarkMapping from 'constants/MarkMapping';
 import GameConstants from 'constants/GameConstants';
 import GameActions from 'actions/GameActions';
+import GameSummaryActions from 'actions/GameSummaryActions';
 import GameStore from 'stores/GameStore';
+import GameSummaryStore from 'stores/GameSummaryStore';
 import UserStore from 'stores/UserStore';
 import Game from 'models/Game';
 
@@ -66,21 +68,36 @@ class Board extends React.Component {
     }
 
     if (this.game.isDraw) {
-      GameActions.drawGame();
+      GameActions.drawGame(this.props.user.get('draws') + 1);
+      GameSummaryActions.updateGameSummary({
+        draws: this.props.gameSummary.get('draws') + 1
+      });
       return true;
+
     } else if (this.game.winner === MarkMapping.get('user')) {
       GameActions.winGame(this.props.user.get('wins') + 1);
+      GameSummaryActions.updateGameSummary({
+        losses: this.props.gameSummary.get('losses') + 1
+      });
       return true;
+
     } else if (this.game.winner === MarkMapping.get('computer')) {
-      GameActions.loseGame();
+      GameActions.loseGame(this.props.user.get('losses') + 1);
+      GameSummaryActions.updateGameSummary({
+        wins: this.props.gameSummary.get('wins') + 1
+      });
       return true;
     }
   }
 }
 
 export default Marty.createContainer(Board, {
-  listenTo: [GameStore, UserStore],
+  listenTo: [GameSummaryStore, GameStore, UserStore],
   fetch: {
+    gameSummary() {
+      return GameStore.getGameSummary();
+    },
+
     gameState() {
       return GameStore.getGameState();
     },

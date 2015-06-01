@@ -1,6 +1,7 @@
 import Marty from 'marty';
 import Immutable from 'immutable';
 import GameSummaryConstants from 'constants/GameSummaryConstants';
+import GameConstants from 'constants/GameConstants';
 
 class GameSummaryStore extends Marty.Store {
   constructor(options) {
@@ -12,7 +13,10 @@ class GameSummaryStore extends Marty.Store {
     this.gamesPlayed;
 
     this.handlers = {
-      _loadGameSummary: GameSummaryConstants.GET_GAME_SUMMARY_DONE
+      _loadGameSummary: GameSummaryConstants.GET_GAME_SUMMARY_DONE,
+      _incrementWins: GameConstants.LOSE_GAME,
+      _incrementLosses: GameConstants.WIN_GAME,
+      _incrementDraws: GameConstants.DRAW_GAME
     };
   }
 
@@ -30,10 +34,29 @@ class GameSummaryStore extends Marty.Store {
   }
 
   _loadGameSummary(gameSummary) {
-    this.wins = gameSummary.wins;
-    this.losses = gameSummary.losses;
-    this.draws = gameSummary.draws;
-    this.gamesPlayed = gameSummary.gamesPlayed;
+    Object.keys(gameSummary).forEach(key => {
+      this[key] = parseInt(gameSummary[key])
+    });
+    this.hasChanged();
+  }
+
+  _incrementWins() {
+    this.wins += 1;
+    this._incrementGamesPlayed();
+  }
+
+  _incrementLosses() {
+    this.losses += 1;
+    this._incrementGamesPlayed();
+  }
+
+  _incrementDraws() {
+    this.draws += 1;
+    this._incrementGamesPlayed();
+  }
+
+  _incrementGamesPlayed() {
+    this.gamesPlayed += 1;
     this.hasChanged();
   }
 }

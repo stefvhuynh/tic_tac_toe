@@ -3,8 +3,18 @@ class GameSummary
 
   GAME_KEY = 'game_summary'
 
-  def initialize
-    self.ensure_game_exists!
+  def self.custom_instance
+    self.ensure_game_summary_exists!
+    self.instance
+  end
+
+  def self.ensure_game_summary_exists!
+    unless $redis.exists(GAME_KEY)
+      $redis.hset(GAME_KEY, 'wins', 0)
+      $redis.hset(GAME_KEY, 'losses', 0)
+      $redis.hset(GAME_KEY, 'draws', 0)
+      $redis.hset(GAME_KEY, 'games_played', 0)
+    end
   end
 
   def update(params)
@@ -27,14 +37,5 @@ class GameSummary
 
   def games_played
     $redis.hget(GAME_KEY, 'games_played')
-  end
-
-  def ensure_game_exists!
-    unless $redis.exists(GAME_KEY)
-      $redis.hset(GAME_KEY, 'wins', 0)
-      $redis.hset(GAME_KEY, 'losses', 0)
-      $redis.hset(GAME_KEY, 'draws', 0)
-      $redis.hset(GAME_KEY, 'games_played', 0)
-    end
   end
 end

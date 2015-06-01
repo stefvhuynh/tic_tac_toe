@@ -19,6 +19,11 @@ class GameSummaryActions extends Marty.ActionCreators {
   failGetGameSummary(errors) {
     this.dispatch(GameSummaryConstants.GET_GAME_SUMMARY_FAILED, errors);
   }
+
+  updateGameSummary(gameSummary) {
+    ApiUtils.updateGameSummary(gameSummary);
+    this.dispatch(GameSummaryConstants.UPDATE_GAME_SUMMARY);
+  }
 }
 
 export default Marty.register(GameSummaryActions);

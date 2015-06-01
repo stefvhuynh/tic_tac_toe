@@ -15,7 +15,9 @@ class UserStore extends Marty.Store {
 
     this.handlers = {
       _loadUser: UserConstants.LOAD_USER,
-      _updateWins: GameConstants.WIN_GAME
+      _updateWins: GameConstants.WIN_GAME,
+      _updateLosses: GameConstants.LOSE_GAME,
+      _updateDraws: GameConstants.DRAW_GAME
     };
   }
 
@@ -44,6 +46,16 @@ class UserStore extends Marty.Store {
 
   _updateWins(wins) {
     this.wins = wins;
+    this.hasChanged();
+  }
+
+  _updateLosses(losses) {
+    this.losses = losses;
+    this.hasChanged();
+  }
+
+  _updateDraws(draws) {
+    this.draws = draws;
     this.hasChanged();
   }
 }
