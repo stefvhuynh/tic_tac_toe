@@ -14,16 +14,40 @@ class GameSummary extends React.Component {
 
   render() {
     return(
-      <div className="GameSummary">
-        <h3>{ `Wins: ${this.props.gameSummary.get('wins')}` }</h3>
-        <h3>{ `Losses: ${this.props.gameSummary.get('losses')}` }</h3>
-        <h3>{ `Draws: ${this.props.gameSummary.get('draws')}` }</h3>
-        <h3>
-          { `Games Played: ${this.props.gameSummary.get('gamesPlayed')}` }
-        </h3>
-        <h3>
-          { `Active Games: ${this.props.gameSummary.get('activeGames')}` }
-        </h3>
+      <div className="GameSummary stats-table">
+        <h3>The Computer's Stats</h3>
+        <table>
+          <tr>
+            <td className="table-label">Wins</td>
+            <td className="table-data">
+              { this.props.gameSummary.get('wins') }
+            </td>
+          </tr>
+          <tr>
+            <td className="table-label">Losses</td>
+            <td className="table-data">
+              { this.props.gameSummary.get('losses') }
+            </td>
+          </tr>
+          <tr>
+            <td className="table-label">Draws</td>
+            <td className="table-data">
+              { this.props.gameSummary.get('draws') }
+            </td>
+          </tr>
+          <tr>
+            <td className="table-label">Games Played</td>
+            <td className="table-data">
+              { this.props.gameSummary.get('gamesPlayed') }
+            </td>
+          </tr>
+          <tr>
+            <td className="table-label">Active Games</td>
+            <td className="table-data">
+              { this.props.gameSummary.get('activeGames') }
+            </td>
+          </tr>
+        </table>
       </div>
     );
   }

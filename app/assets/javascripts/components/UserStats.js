@@ -9,10 +9,22 @@ class UserStats extends React.Component {
 
   render() {
     return(
-      <div className="UserStats">
-        <h3>Wins: { this.props.user.get('wins') }</h3>
-        <h3>Losses: { this.props.user.get('losses') }</h3>
-        <h3>Draws: { this.props.user.get('draws') }</h3>
+      <div className="UserStats stats-table">
+        <h3>Your Stats</h3>
+        <table>
+          <tr>
+            <td className="table-label">Wins</td>
+            <td className="table-data">{ this.props.user.get('wins') }</td>
+          </tr>
+          <tr>
+            <td className="table-label">Losses</td>
+            <td className="table-data">{ this.props.user.get('losses') }</td>
+          </tr>
+          <tr>
+            <td className="table-label">Draws</td>
+            <td className="table-data">{ this.props.user.get('draws') }</td>
+          </tr>
+        </table>
       </div>
     );
   }

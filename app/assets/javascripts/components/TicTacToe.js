@@ -21,7 +21,7 @@ class TicTacToe extends React.Component {
   render() {
     return(
       <div className="TicTacToe">
-        <h1>TicTacToe</h1>
+        <h1>Tic Tac Toe</h1>
         <RouteHandler/>
       </div>
     );

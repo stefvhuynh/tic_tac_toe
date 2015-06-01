@@ -13,7 +13,7 @@ class LogIn extends React.Component {
 
   render() {
     return(
-      <div className="LogIn">
+      <div className="LogIn user-form">
         <h3>Log In</h3>
         <form>
           <input type="text"

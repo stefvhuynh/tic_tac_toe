@@ -13,7 +13,7 @@ class SignUp extends React.Component {
 
   render() {
     return(
-      <div className="SignUp">
+      <div className="SignUp user-form">
         <h3>Sign Up</h3>
         <form>
           <input type="text"

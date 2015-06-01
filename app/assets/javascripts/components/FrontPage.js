@@ -21,7 +21,8 @@ class FrontPage extends React.Component {
     if (this.props.loggedIn) {
       userSection = (
         <div>
-          <button onClick={ this._onLogOutClick() }>Log Out</button>
+          <button className="log-out-button"
+            onClick={ this._onLogOutClick() }>Log Out</button>
           <UserStats/>
         </div>
       );
@@ -37,7 +38,9 @@ class FrontPage extends React.Component {
     return(
       <div className="FrontPage">
         <GameSummary/>
-        <Link to="game-page">Play Game</Link>
+        <div className="play-game-link-container">
+          <Link to="game-page">Play Game</Link>
+        </div>
         { userSection }
       </div>
     );
