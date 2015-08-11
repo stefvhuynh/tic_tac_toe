@@ -1,6 +1,10 @@
 Tic Tac Toe
 ===========
 
+This was a coding challenge I did for a job interview. It is a tic tac toe game
+where users play against the computer. Users can log in to keep track of their
+record. The computer's overall wins and losses are also recorded.
+
 Please note that I normally try to TDD my applications. For the interest of
 time, I did not do that here. For an example, check out my recent project,
 [RtTrainer](http://github.com/stefvhuynh/rt_trainer) and go to the spec folder
